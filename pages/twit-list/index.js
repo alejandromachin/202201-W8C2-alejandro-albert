@@ -1,7 +1,12 @@
+import Twit from "../../components/Twit";
+
 const TwitterList = ({ twits }) => {
   return (
     <>
       <h1>TODAYS TWITESSS:</h1>
+      {twits.map((twit) => {
+        <Twit key={twit.id} />;
+      })}
     </>
   );
 };
