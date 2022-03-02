@@ -4,9 +4,9 @@ const TwitterList = ({ twits }) => {
   return (
     <>
       <h1>TODAYS TWITESSS:</h1>
-      {twits.map((twit) => {
-        <Twit key={twit.id} />;
-      })}
+      {twits.tuits.map((twit) => (
+        <Twit key={twit._id} twit={twit} />
+      ))}
     </>
   );
 };
@@ -14,8 +14,11 @@ const TwitterList = ({ twits }) => {
 export default TwitterList;
 
 export const getServerSideProps = async () => {
-  const response = await fetch(process.env.NEXT_PUBLIC_TWITAPI);
+  const response = await fetch(
+    "https://w8ch2-api-david-berenguer.herokuapp.com/tuits"
+  );
   const twits = await response.json();
+  console.log(twits);
 
   return {
     props: { twits },
