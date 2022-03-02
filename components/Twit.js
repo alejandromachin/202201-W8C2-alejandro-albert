@@ -20,13 +20,13 @@ const TwitCard = styled.div`
   list-style-type: none;
   box-shadow: 2px 2px 31px 6px rgba(0, 0, 0, 0.48);
 `;
-const Twit = ({ twit: { text, date, likes } }) => {
+const Twit = ({ twit }) => {
   return (
     <TwitCard>
       <h2>I`m a twit!</h2>
-      <p>{text}</p>
-      <p>{date}</p>
-      <div>{likes}</div>
+      <p>{twit.text}</p>
+      <p>{twit.date}</p>
+      <div>{twit.likes}</div>
     </TwitCard>
   );
 };
