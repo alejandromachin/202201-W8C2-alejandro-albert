@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Twit from "../../components/Twit";
+import Twit from "../../components/Twit/Twit";
 
 const TwitsList = styled.div`
   display: flex;
