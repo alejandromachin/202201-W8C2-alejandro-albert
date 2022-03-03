@@ -23,9 +23,7 @@ const TwitterList = ({ twits }) => {
 export default TwitterList;
 
 export const getServerSideProps = async () => {
-  const response = await fetch(
-    "https://tuitah-alejandro-albert.herokuapp.com/"
-  );
+  const response = await fetch(process.env.NEXT_PUBLIC_TWITAPI);
   const twits = await response.json();
 
   return {
