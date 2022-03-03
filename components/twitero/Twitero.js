@@ -61,6 +61,14 @@ const TwitCard = styled.div`
     color: red;
     font-size: 20px;
   }
+  & .edit {
+    height: 40px;
+    width: 80px;
+    position: absolute;
+    z-index: 1;
+    top: 70px;
+    font-size: 20px;
+  }
 `;
 const Twitero = ({ twitero }) => {
   const [borrado, setBorrado] = useState(false);
@@ -77,6 +85,8 @@ const Twitero = ({ twitero }) => {
     setIdBorrado(twitero._id);
   };
 
+  const editTwitero = async () => {};
+
   return (
     <TwitCard>
       <h1>{twitero.username}</h1>
@@ -87,6 +97,9 @@ const Twitero = ({ twitero }) => {
         </p>
       )}
       <button onClick={deleteTwitero}>DELETE</button>
+      <button className="edit" onClick={editTwitero}>
+        EDIT
+      </button>
     </TwitCard>
   );
 };
