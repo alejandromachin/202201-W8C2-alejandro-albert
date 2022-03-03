@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const NavigationTotal = styled.div`
   color: #f5cf11;
-  font-size: 30px;
+  font-size: 40px;
   margin-top: 30px;
   display: flex;
   flex-direction: row;
@@ -32,6 +32,9 @@ const Navigation = () => {
             </li>
             <li>
               <Link href="/twiteros-list">TWITEROS</Link>
+            </li>
+            <li>
+              <Link href="/create-twitero">NEW TWITERO</Link>
             </li>
           </NavigationDiv>
         </NavigationTotal>
