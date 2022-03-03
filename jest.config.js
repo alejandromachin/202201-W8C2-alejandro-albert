@@ -14,6 +14,8 @@ const customJestConfig = {
     "!**/coverage/**/*.js",
     "!.next/**/*",
     "!/coverage/**/*",
+    "!./pages/_app.js",
+    "!./pages/index.js",
   ],
 };
 
