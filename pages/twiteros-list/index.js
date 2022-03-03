@@ -27,7 +27,7 @@ const ContactList = ({ twiteros }) => {
       </CenterHeding>
       <TwitsList>
         {twiteros.tuiteros.map((twitero) => (
-          <Twitero twitero={twitero} key={twitero.id} />
+          <Twitero twitero={twitero} key={twitero._id} />
         ))}
       </TwitsList>
     </>
