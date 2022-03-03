@@ -1,13 +1,22 @@
+import styled from "styled-components";
 import Twit from "../../components/Twit";
+
+const TwitsList = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+`;
 
 const TwitterList = ({ twits }) => {
   return (
-    <>
+    <TwitsList>
       <h1>TODAYS TWITESSS:</h1>
       {twits.tuits.map((twit) => (
         <Twit key={twit._id} twit={twit} />
       ))}
-    </>
+    </TwitsList>
   );
 };
 
@@ -18,7 +27,6 @@ export const getServerSideProps = async () => {
     "https://tuitah-alejandro-albert.herokuapp.com/"
   );
   const twits = await response.json();
-  console.log(twits);
 
   return {
     props: { twits },
