@@ -30,6 +30,9 @@ const Navigation = () => {
             <li>
               <Link href="/twit-list">TWITS</Link>
             </li>
+            <li>
+              <Link href="/twiteros-list">TWITEROS</Link>
+            </li>
           </NavigationDiv>
         </NavigationTotal>
       </ul>
