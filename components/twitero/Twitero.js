@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const TwitCard = styled.div`
@@ -61,10 +61,126 @@ const TwitCard = styled.div`
     color: red;
     font-size: 20px;
   }
+  & .edit {
+    height: 40px;
+    width: 80px;
+    position: absolute;
+    top: 70px;
+    font-size: 20px;
+  }
 `;
+
+const AllContainer = styled.div`
+  position: relative;
+  width: 420px;
+  height: 120px;
+`;
+const EditContainer = styled.div`
+  position: absolute;
+  top: -7px;
+  width: 100%;
+  height: 100%;
+  background-color: #9ec3ff;
+  border: 3px solid black;
+  box-shadow: 2px 2px 31px 6px rgba(0, 0, 0, 0.48);
+  border-radius: 10px;
+  margin: 0;
+  padding: 0;
+
+  & button {
+    color: #000;
+    background-color: #f5cf11;
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    font-size: 15px;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    border-radius: 10px;
+    border: 3px solid #000;
+    height: 50px;
+    width: 80px;
+    position: absolute;
+    top: 70px;
+    font-size: 20px;
+  }
+
+  & form {
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+
+    border-radius: 10px;
+    text-align: center;
+    margin-top: 10px;
+    list-style: none;
+
+    & input {
+      margin: 5px;
+      width: 100px;
+    }
+  }
+  & .cancel  {
+    color: #000;
+    background-color: #f5cf11;
+    position: absolute;
+    top: -10px;
+    right: 100px;
+    font-size: 15px;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    border-radius: 10px;
+    border: 3px solid #000;
+    height: 50px;
+    width: 100px;
+    position: absolute;
+    top: 70px;
+    font-size: 20px;
+  }
+  & .disabled {
+    background-color: #c2ba93;
+  }
+`;
+
 const Twitero = ({ twitero }) => {
   const [borrado, setBorrado] = useState(false);
+  const [hidden, setHidden] = useState(true);
   const [idBorrado, setIdBorrado] = useState("");
+  const [buttonDisabled, setButtonIsDisabled] = useState(true);
+
+  const blankFields = { name: "", username: "" };
+
+  const [formData, setFormData] = useState(blankFields);
+  const resetForm = () => {
+    setFormData(blankFields);
+  };
+
+  const sendEditTwitero = async (event) => {
+    event.preventDefault();
+    const response = await fetch(
+      `https://tuitah-alejandro-albert.herokuapp.com/tuiteros/${twitero._id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      }
+    );
+    setHidden(!hidden);
+    resetForm();
+  };
+
+  const changeData = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.id]: event.target.value,
+    });
+  };
 
   const deleteTwitero = async () => {
     const response = await fetch(
@@ -77,17 +193,75 @@ const Twitero = ({ twitero }) => {
     setIdBorrado(twitero._id);
   };
 
+  const editTwitero = () => {
+    setHidden(!hidden);
+  };
+
+  const cancel = () => {
+    setHidden(!hidden);
+    resetForm();
+  };
+
+  useEffect(() => {
+    const { username, name } = formData;
+    if (username && name) {
+      setButtonIsDisabled(false);
+    } else {
+      setButtonIsDisabled(true);
+    }
+  }, [formData]);
+
   return (
-    <TwitCard>
-      <h1>{twitero.username}</h1>
-      <p>{twitero.name}</p>
-      {idBorrado === twitero._id && (
-        <p className="borrado">
-          Hola Mario, se ha borrado pero tienes que refrescar
-        </p>
-      )}
-      <button onClick={deleteTwitero}>DELETE</button>
-    </TwitCard>
+    <AllContainer>
+      <TwitCard>
+        <h1>{twitero.username}</h1>
+        <p>{twitero.name}</p>
+        {idBorrado === twitero._id && (
+          <p className="borrado">
+            Hola Mario, se ha borrado pero tienes que refrescar
+          </p>
+        )}
+        <button onClick={deleteTwitero}>DELETE</button>
+        <button
+          className={hidden ? "edit" : "edit hidden"}
+          onClick={editTwitero}
+        >
+          EDIT
+        </button>
+      </TwitCard>
+      <EditContainer className={hidden ? "edit hidden" : "edit"}>
+        <form onSubmit={sendEditTwitero} noValidate autoComplete="off">
+          <label htmlFor="name">Name: </label>
+          <input
+            type="text"
+            id="name"
+            value={formData.name}
+            onChange={changeData}
+            placeholder="Name"
+          />
+
+          <label htmlFor="username">Username: </label>
+          <input
+            type="text"
+            id="username"
+            value={formData.username}
+            onChange={changeData}
+            placeholder="Username"
+          />
+
+          <button
+            type="submit"
+            disabled={buttonDisabled}
+            className={buttonDisabled ? "disabled" : ""}
+          >
+            SEND
+          </button>
+        </form>
+        <button className="cancel" onClick={cancel}>
+          CANCEL
+        </button>
+      </EditContainer>
+    </AllContainer>
   );
 };
 

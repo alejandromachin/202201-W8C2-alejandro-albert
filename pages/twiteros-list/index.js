@@ -27,7 +27,7 @@ const ContactList = ({ twiteros }) => {
       </CenterHeding>
       <TwitsList>
         {twiteros.tuiteros.map((twitero) => (
-          <Twitero twitero={twitero} key={twitero.id} />
+          <Twitero twitero={twitero} key={twitero._id} />
         ))}
       </TwitsList>
     </>
@@ -37,7 +37,9 @@ const ContactList = ({ twiteros }) => {
 export default ContactList;
 
 export const getServerSideProps = async () => {
-  const response = await fetch("http://localhost:4000/tuiteros");
+  const response = await fetch(
+    "https://tuitah-alejandro-albert.herokuapp.com/tuiteros"
+  );
 
   const twiteros = await response.json();
 
