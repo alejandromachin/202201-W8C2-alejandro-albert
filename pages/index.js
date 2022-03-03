@@ -4,15 +4,6 @@ import { useEffect } from "react";
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
-  useEffect(() => {
-    (async () => {
-      const response = await fetch(process.env.NEXT_PUBLIC_LOGINSALESFORD);
-      const token = await response.json();
-
-      localStorage.setItem("token", token);
-    })();
-  }, []);
-
   return (
     <div className={styles.container}>
       <Head>
