@@ -7,6 +7,7 @@ const TwitsList = styled.div`
   justify-content: center;
   align-items: center;
   gap: 10px;
+  margin-top: 100px;
 `;
 
 const TwitterList = ({ twits }) => {
@@ -14,7 +15,7 @@ const TwitterList = ({ twits }) => {
     <TwitsList>
       <h1>TODAYS TWITESSS:</h1>
       {twits.tuits.map((twit) => (
-        <Twit key={twit._id} twit={twit} />
+        <Twit key={twit.id} twit={twit} />
       ))}
     </TwitsList>
   );
@@ -23,7 +24,7 @@ const TwitterList = ({ twits }) => {
 export default TwitterList;
 
 export const getServerSideProps = async () => {
-  const response = await fetch(process.env.NEXT_PUBLIC_TWITAPI);
+  const response = await fetch("https://tuitah-alejandro-albert.herokuapp.com");
   const twits = await response.json();
 
   return {
