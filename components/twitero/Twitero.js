@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const TwitCard = styled.div`
@@ -123,12 +123,35 @@ const EditContainer = styled.div`
       width: 100px;
     }
   }
+  & .cancel  {
+    color: #000;
+    background-color: #f5cf11;
+    position: absolute;
+    top: -10px;
+    right: 100px;
+    font-size: 15px;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    border-radius: 10px;
+    border: 3px solid #000;
+    height: 50px;
+    width: 100px;
+    position: absolute;
+    top: 70px;
+    font-size: 20px;
+  }
+  & .disabled {
+    background-color: #c2ba93;
+  }
 `;
 
 const Twitero = ({ twitero }) => {
   const [borrado, setBorrado] = useState(false);
   const [hidden, setHidden] = useState(true);
   const [idBorrado, setIdBorrado] = useState("");
+  const [buttonDisabled, setButtonIsDisabled] = useState(true);
+
   const blankFields = { name: "", username: "" };
 
   const [formData, setFormData] = useState(blankFields);
@@ -174,6 +197,20 @@ const Twitero = ({ twitero }) => {
     setHidden(!hidden);
   };
 
+  const cancel = () => {
+    setHidden(!hidden);
+    resetForm();
+  };
+
+  useEffect(() => {
+    const { username, name } = formData;
+    if (username && name) {
+      setButtonIsDisabled(false);
+    } else {
+      setButtonIsDisabled(true);
+    }
+  }, [formData]);
+
   return (
     <AllContainer>
       <TwitCard>
@@ -212,8 +249,17 @@ const Twitero = ({ twitero }) => {
             placeholder="Username"
           />
 
-          <button type="submit">SEND</button>
+          <button
+            type="submit"
+            disabled={buttonDisabled}
+            className={buttonDisabled ? "disabled" : ""}
+          >
+            SEND
+          </button>
         </form>
+        <button className="cancel" onClick={cancel}>
+          CANCEL
+        </button>
       </EditContainer>
     </AllContainer>
   );
