@@ -5,7 +5,7 @@ import "whatwg-fetch";
 describe("Given a TwitterList component", () => {
   describe("When it is rendered", () => {
     test("Then it should render a heading and a twitter list", () => {
-      const twits = ["hola"];
+      const twits = { tuits: ["hola"] };
       const expectedHeading = "TODAYS TWITESSS:";
 
       render(<TwitterList twits={twits} />);
@@ -17,14 +17,25 @@ describe("Given a TwitterList component", () => {
   });
 });
 
-// describe("Given a getServerSideProps function", () => {
-//   describe("When it is called", () => {
-//     test("Then it should return an object with a property props", async () => {
-//       const response = { params: { test: "test" } };
+describe("Given a getServerSideProps function", () => {
+  describe("When it is called", () => {
+    test("Then it should return an object with a property props", async () => {
+      const response = {
+        props: {
+          twits: [
+            {
+              text: "hola",
+            },
+            {
+              text: "hola2",
+            },
+          ],
+        },
+      };
 
-//       const expectedResponse = await getServerSideProps();
+      const expectedResponse = await getServerSideProps();
 
-//       expect(expectedResponse).toEqual(response);
-//     });
-//   });
-// });
+      expect(expectedResponse).toEqual(response);
+    });
+  });
+});

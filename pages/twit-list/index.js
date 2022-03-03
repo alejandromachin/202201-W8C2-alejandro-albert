@@ -15,7 +15,7 @@ export default TwitterList;
 
 export const getServerSideProps = async () => {
   const response = await fetch(
-    "https://w8ch2-api-david-berenguer.herokuapp.com/tuits"
+    "https://tuitah-alejandro-albert.herokuapp.com/"
   );
   const twits = await response.json();
   console.log(twits);
